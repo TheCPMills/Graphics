@@ -1,0 +1,16 @@
+p 0.0 0.0 0.0
+p 1.0 0.0 0.0
+p 1.0 0.0 1.0
+p 0.0 0.0 1.0
+p 0.5 1.0 0.5
+
+c 1.0 0.0 0.0
+c 0.3 0.0 1.0
+
+usecolor 1
+line 1 2 3 4 1
+
+usecolor 2
+resolution 4
+bezier 1 4 3 2
+line 1 5 3
