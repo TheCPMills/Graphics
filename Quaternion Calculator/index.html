@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Vector Rotation Calculator</title>
+
+    <meta charset="utf-8">
+    <script src="source.js"></script>
+
+    <h1>Vector Rotation Calculator</h1>
+
+    <body onload="setup();">
+        Point
+        <br> (
+        <input type="text" id="px-box" placeholder="x-value" oninput="canCalculate();"> ,
+        <input type="text" id="py-box" placeholder="y-value" oninput="canCalculate();"> ,
+        <input type="text" id="pz-box" placeholder="z-value" oninput="canCalculate();">
+        )
+        <br><br/>
+        Axis of Rotation
+        <br> &#12296;
+        <input type="text" id="vx-box" placeholder="axis x-component" oninput="canCalculate();"> ,
+        <input type="text" id="vy-box" placeholder="axis y-component" oninput="canCalculate();"> ,
+        <input type="text" id="vz-box" placeholder="axis z-component" oninput="canCalculate();">
+        &#12297;
+        <br><br/>
+        Angle of Rotation
+        <br>
+        <input type="text" id="t-box" placeholder="angle of rotation" oninput="canCalculate();">
+        <input type="radio" id=angle-degree name="angle" value="degrees" checked onclick="canCalculate();">
+        <label for="degrees">Degrees</label>
+        <input type="radio" id=angle-radian name="angle" value="radians" onclick="canCalculate();">
+        <label for="radians">Radians</label>
+        <br><br/>
+        Result
+        <br> (
+        <input type="text" readonly id="result-x-box" placeholder="result x-value"> ,
+        <input type="text" readonly id="result-y-box" placeholder="result y-value"> ,
+        <input type="text" readonly id="result-z-box" placeholder="result z-value">
+        )
+    </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Camera Matrix Transformation</title>
+
+    <meta charset="utf-8">
+    <script src="source.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.2/math.js"></script>
+
+    <h1>Camera Matrix Transformation</h1>
+
+    <body onload="setup();">
+        <b>Point</b>
+        <br> (
+            <input type="text" id="px-box" placeholder="x-value" oninput="canCalculate();"> ,
+            <input type="text" id="py-box" placeholder="y-value" oninput="canCalculate();"> ,
+            <input type="text" id="pz-box" placeholder="z-value" oninput="canCalculate();">
+        )
+        <section>
+            <h2>Camera Setup</h2>
+            <b>Eye (Camera Position)</b>
+            <br> (
+                <input type="text" id="eye-x-box" placeholder="x-value" oninput="calculateOrientation();"> ,
+                <input type="text" id="eye-y-box" placeholder="y-value" oninput="calculateOrientation();"> ,
+                <input type="text" id="eye-z-box" placeholder="z-value" oninput="calculateOrientation();">
+            )
+            <br><br />
+            <b>Spot (Camera Target)</b>
+            <br> (
+                <input type="text" id="spot-x-box" placeholder="x-value" oninput="calculateOrientation();"> ,
+                <input type="text" id="spot-y-box" placeholder="y-value" oninput="calculateOrientation();"> ,
+                <input type="text" id="spot-z-box" placeholder="z-value" oninput="calculateOrientation();">
+            )
+            <br><br />
+            <b>Direction (Camera Orientation)</b>
+            <br> &#12296;
+                <input type="text" id="direction-x-box" placeholder="x-value" oninput="calculateTarget();"> ,
+                <input type="text" id="direction-y-box" placeholder="y-value" oninput="calculateTarget();"> ,
+                <input type="text" id="direction-z-box" placeholder="z-value" oninput="calculateTarget();">
+            &#12297;
+
+            <!-- add button to auto normalize -->
+            <input type="button" value="Normalize" onclick="normalizeDirectionVector();">
+
+            <br><br />
+            <b>Up (World Up Vector)</b>
+            <br> &#12296;
+                <input type="text" id="up-x-box" placeholder="x-value" oninput="canCalculate();"> ,
+                <input type="text" id="up-y-box" placeholder="y-value" oninput="canCalculate();"> ,
+                <input type="text" id="up-z-box" placeholder="z-value" oninput="canCalculate();">
+            &#12297;
+
+            <!-- add button to auto normalize -->
+            <input type="button" value="Normalize" onclick="normalizeUpVector();">
+        </section>
+        <section>
+            <h2>Projection Setup</h2>
+            <b>Projection Type</b>
+            <br>
+                <input type="radio" id="orthographic" name="projection" value="orthographic" checked onclick="canCalculate();">
+                <label for="orthographic">Orthographic</label>
+                <input type="radio" id="perspective" name="projection" value="perspective" onclick="canCalculate();">
+                <label for="perspective">Perspective</label>
+            <br><br />
+            <section id="orthographic-section">
+                <b>Top Plane</b>
+                <br>
+                    <input type="text" id="top-box-parallel" placeholder="top plane" oninput="canCalculate();">
+                <br><br />
+                <b>Bottom Plane</b>
+                <br>
+                    <input type="text" id="bottom-box-parallel" placeholder="bottom plane" oninput="canCalculate();">
+                <br><br />
+                <b>Left Plane</b>
+                <br>
+                    <input type="text" id="left-box-parallel" placeholder="left plane" oninput="canCalculate();">
+                <br><br />
+                <b>Right Plane</b>
+                <br>
+                    <input type="text" id="right-box-parallel" placeholder="right plane" oninput="canCalculate();">
+                <br><br />
+                <b>Near Plane</b>
+                <br>
+                    <input type="text" id="near-box-orthographic" placeholder="near plane" oninput="canCalculate();">
+                <br><br />
+                <b>Far Plane</b>
+                <br>
+                    <input type="text" id="far-box-orthographic" placeholder="far plane" oninput="canCalculate();">
+            </section>
+            <section id="perspective-section">
+                <b>Field of View</b>
+                <br>
+                    <input type="text" id="fov-box" placeholder="field of view" oninput="canCalculate();">
+                    &deg;
+                <br><br />
+                <b>Aspect Ratio</b>
+                <br>
+                    <input type="text" id="aspect-ratio-box" placeholder="aspect ratio" oninput="canCalculate();">
+                <br><br />
+                <b>Near Plane</b>
+                <br>
+                    <input type="text" id="near-box-perspective" placeholder="near plane" oninput="canCalculate();">
+                <br><br />
+                <b>Far Plane</b>
+                <br>
+                    <input type="text" id="far-box-perspective" placeholder="far plane" oninput="canCalculate();">
+            </section>
+        </section>
+
+        <section>
+            <h2>Result</h2>
+            (
+                <input type="text" readonly id="result-x-box-3d" placeholder="result x-value"> ,
+                <input type="text" readonly id="result-y-box-3d" placeholder="result y-value"> ,
+                <input type="text" readonly id="result-z-box-3d" placeholder="result z-value">
+            )
+        </section>
+        
+    </body>
+</html>

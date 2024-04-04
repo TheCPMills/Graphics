@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Affine Transformation</title>
+
+    <meta charset="utf-8">
+    <script src="source.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.2/math.js"></script>
+
+    <h1>Affine Transformation</h1>
+
+    <body onload="setup();">
+        <b>Point</b>
+        <br> (
+            <input type="text" id="px-box" placeholder="x-value" oninput="canCalculate();"> ,
+            <input type="text" id="py-box" placeholder="y-value" oninput="canCalculate();"> ,
+            <input type="text" id="pz-box" placeholder="z-value" oninput="canCalculate();">
+        )
+        <section>
+            <h2>Transformation Setup</h2>
+            <b>Transformation Type</b>
+            <br>
+                <input type="radio" id="translation" name="transformation" value="translation" checked onclick="canCalculate();">
+                <label for="translation">Translation</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" id="rotation" name="transformation" value="rotation" onclick="canCalculate();">
+                <label for="rotation">Rotation</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" id="scaling" name="transformation" value="scaling" onclick="canCalculate();">
+                <label for="scaling">Scaling</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" id="reflection" name="transformation" value="reflection" onclick="canCalculate();">
+                <label for="reflection">Reflection</label>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" id="shearing" name="transformation" value="shearing" onclick="canCalculate();">
+                <label for="shearing">Shearing</label>
+            <br><br />
+            <section id="translation-section">
+                <b>Translation Vector</b>
+                <br> &#12296;
+                    <input type="text" id="tx-box" placeholder="x-value" oninput="canCalculate();"> ,
+                    <input type="text" id="ty-box" placeholder="y-value" oninput="canCalculate();"> ,
+                    <input type="text" id="tz-box" placeholder="z-value" oninput="canCalculate();">
+                &#12297;
+            </section>
+            <section id="rotation-section">
+                <b>Axis of Rotation</b>
+                <br> &#12296;
+                    <input type="text" id="vx-box" placeholder="x-value" oninput="canCalculate();"> ,
+                    <input type="text" id="vy-box" placeholder="y-value" oninput="canCalculate();"> ,
+                    <input type="text" id="vz-box" placeholder="z-value" oninput="canCalculate();">
+                &#12297;
+                <br><br><b>Angle of Rotation</b>
+                <br>
+                <input type="text" id="theta-box" placeholder="angle of rotation" oninput="canCalculate();">
+                <input type="radio" id=angle-degree name="angle" value="degrees" checked onclick="canCalculate();">
+                <label for="degrees">Degrees</label>
+                <input type="radio" id=angle-radian name="angle" value="radians" onclick="canCalculate();">
+                <label for="radians">Radians</label>
+            </section>
+            <section id="scaling-section">
+                <b>Scaling Factor</b>
+                <br> &#12296;
+                    <input type="text" id="sx-box" placeholder="x-value" oninput="canCalculate();"> ,
+                    <input type="text" id="sy-box" placeholder="y-value" oninput="canCalculate();"> ,
+                    <input type="text" id="sz-box" placeholder="z-value" oninput="canCalculate();">
+                &#12297;
+            </section>
+            <section id="reflection-section">
+                <b>Reflection Plane</b>
+                <br> 
+                    <input type="text" id="fa-box" placeholder="a-value" oninput="canCalculate();"> x + 
+                    <input type="text" id="fb-box" placeholder="b-value" oninput="canCalculate();"> y +
+                    <input type="text" id="fc-box" placeholder="c-value" oninput="canCalculate();"> z +
+                    <input type="text" id="fd-box" placeholder="d-value" oninput="canCalculate();"> = 0
+            </section>
+            <section id="shearing-section">
+                <b>Shearing Factor (xy)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shearing Factor (yx)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shearing Factor (zx)</b>
+                <br> <input type="text" id="hxy-box" placeholder="xy-value" oninput="canCalculate();">&nbsp;&nbsp;
+                <input type="text" id="hyx-box" placeholder="yx-value" oninput="canCalculate();">&nbsp;&nbsp;
+                <input type="text" id="hzx-box" placeholder="zx-value" oninput="canCalculate();">
+                <br><br><b>Shearing Factor (xz)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shearing Factor (yz)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shearing Factor (zy)</b>
+                <br> <input type="text" id="hxz-box" placeholder="xz-value" oninput="canCalculate();">&nbsp;&nbsp;
+                <input type="text" id="hyz-box" placeholder="yz-value" oninput="canCalculate();">&nbsp;&nbsp;
+                <input type="text" id="hzy-box" placeholder="zy-value" oninput="canCalculate();">
+            </section>
+        </section>
+
+        <section>
+            <h2>Result</h2>
+            (
+                <input type="text" readonly id="result-x-box" placeholder="result x-value"> ,
+                <input type="text" readonly id="result-y-box" placeholder="result y-value"> ,
+                <input type="text" readonly id="result-z-box" placeholder="result z-value">
+            )
+        </section>
+        
+    </body>
+</html>
