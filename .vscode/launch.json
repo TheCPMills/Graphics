@@ -5,9 +5,7 @@
             "name": "App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "Graphics_1b8aaefe",
-            "vmArgs": "-Dorg.lwjgl.librarypath=\"C://Users//cpmil//lwjgl\""
+            "projectName": "Graphics_225d600b"
         }
     ]
-
 }

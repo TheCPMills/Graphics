@@ -16,6 +16,11 @@ public class App {
     private static final int height = 1080;
     private static int useTexture = 1;
     private static boolean qKeyDown = false;
+    private static boolean zKeyDown = false;
+    private static boolean dollyZoom = false;
+    private static float fov = 70.0f;
+
+    private static float frustumHeight = (float) (2.0f * Math.sqrt(12.0f) * Math.tan(glm.radians(fov) / 2.0f));
 
     // ==============================
     // ==== MODEL INITIALIZATION ====
@@ -80,14 +85,14 @@ public class App {
         initializeMLC();
 
         // set up shadows
-        FBO shadowMap = new FBO(4096, 4096);
-        shadowMap.bind();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        Shader shadowShader = new Shader("ShadowVertexShader.vert", "ShadowFragmentShader.frag");
-        shadowShader.activate();
-        glUniformMatrix4fv(glGetUniformLocation(shadowShader.id, "modelMatrix"), false, modelMatrix.toBuffer());
-        objectModel.draw(shadowShader, camera);
-        shadowMap.unbind();
+        // FBO shadowMap = new FBO(4096, 4096);
+        // shadowMap.bind();
+        // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        // Shader shadowShader = new Shader("ShadowVertexShader.vert", "ShadowFragmentShader.frag");
+        // shadowShader.activate();
+        // glUniformMatrix4fv(glGetUniformLocation(shadowShader.id, "modelMatrix"), false, modelMatrix.toBuffer());
+        // objectModel.draw(shadowShader, camera);
+        // shadowMap.unbind();
 
         // initialize and activate shader program
         Shader shaderProgram = new Shader("VertexShader.vert", "GeometryShader3D.geom", "FragmentShader.frag");
@@ -147,10 +152,10 @@ public class App {
 
         // lighting initialization
         lights.add(new PointLight(new vec3(-0.375f, 0.75f, 0.375f), new vec3(2.0f, 3.5f, 2.5f), 0.5f, new vec4(2.5f, 2.45f, 2.5f, 2.5f).scale(0.4f)));
-        lights.add(new PointLight(new vec3(0.375f, 0.75f, -0.375f), new vec3(2.0f, 3.5f, 2.5f), 0.5f, new vec4(2.5f, 2.45f, 2.5f, 2.5f).scale(0.4f)));
+        // lights.add(new PointLight(new vec3(0.375f, 0.75f, -0.375f), new vec3(2.0f, 3.5f, 2.5f), 0.5f, new vec4(2.5f, 2.45f, 2.5f, 2.5f).scale(0.4f)));
 
         // camera initialization
-        mat4 projectionMatrix = glm.perspective(70.0f, (float) width / height, 0.1f, 100.0f);
+        mat4 projectionMatrix = glm.perspective(fov, (float) width / height, 0.1f, 100.0f);
         camera = new Camera(width, height, projectionMatrix, cameraPosition);
         camera.setOrientation(cameraOrientation);
     }
@@ -158,6 +163,15 @@ public class App {
     private static void setupController(Controller controller, Shader shader) {
         controller.addInput(Arrays.asList(GLFW_KEY_W), () -> {
             camera.setPosition(camera.position.add(camera.orientation.scale(camera.speed)));
+            if (dollyZoom) {
+                float distanceFromCenter = (float) Math.sqrt(Math.pow(camera.position.x, 2) + Math.pow(camera.position.y, 2) + Math.pow(camera.position.z, 2));
+                
+                float newFOV = (float) (2.0f * Math.atan(frustumHeight / (2.0f * distanceFromCenter)) * (180.0f / Math.PI));
+
+                mat4 projectionMatrix = glm.perspective(newFOV, (float) width / height, 0.1f, 100.0f);
+                camera = new Camera(width, height, projectionMatrix, camera.position);
+                camera.setOrientation(cameraOrientation);
+            }
         }, () -> {});
 
         controller.addInput(Arrays.asList(GLFW_KEY_A), () -> {
@@ -166,6 +180,15 @@ public class App {
 
         controller.addInput(Arrays.asList(GLFW_KEY_S), () -> {
             camera.setPosition(camera.position.add(camera.orientation.scale(-camera.speed)));
+            if (dollyZoom) {
+                float distanceFromCenter = (float) Math.sqrt(Math.pow(camera.position.x, 2) + Math.pow(camera.position.y, 2) + Math.pow(camera.position.z, 2));
+                
+                float newFOV = (float) (2.0f * Math.atan(frustumHeight / (2.0f * distanceFromCenter)) * (180.0f / Math.PI));
+
+                mat4 projectionMatrix = glm.perspective(newFOV, (float) width / height, 0.1f, 100.0f);
+                camera = new Camera(width, height, projectionMatrix, camera.position);
+                camera.setOrientation(cameraOrientation);
+            }
         }, () -> {});
 
         controller.addInput(Arrays.asList(GLFW_KEY_D), () -> {
@@ -194,13 +217,10 @@ public class App {
             float rotX = camera.sensitivity * (mouseY - (height / 2)) / height;
             float rotY = camera.sensitivity * (mouseX - (width / 2)) / width;
 
-            vec3 newOrientation = glm.rotate(camera.orientation.negate(),
-            camera.orientation.negate().cross(camera.worldUp).normalize(),
-            glm.radians(rotX));
+            vec3 newOrientation = glm.rotate(camera.orientation.negate(), camera.orientation.negate().cross(camera.worldUp).normalize(), glm.radians(rotX));
 
-            if (Math.abs(newOrientation.angle(camera.worldUp) - glm.radians(90.0f)) <=
-            glm.radians(85.0f)) {
-            camera.setOrientation(newOrientation);
+            if (Math.abs(newOrientation.angle(camera.worldUp) - glm.radians(90.0f)) <= glm.radians(85.0f)) {
+                camera.setOrientation(newOrientation);
             }
 
             camera.setOrientation(glm.rotate(camera.orientation.negate(), camera.worldUp,
@@ -225,5 +245,14 @@ public class App {
             camera.setPosition(cameraPosition);
             camera.setOrientation(cameraOrientation);
         }, () -> {});
+
+        controller.addInput(Arrays.asList(GLFW_KEY_Z), () -> {
+            if (!zKeyDown) {
+                zKeyDown = true;
+                dollyZoom = !dollyZoom;
+            }
+        }, () -> {
+            zKeyDown = false;
+        });
     }
 }

@@ -7,8 +7,8 @@ public class Camera {
 
     public int width, height;
     public mat4 projectionMatrix;
-    protected float speed = 0.05f;
-    protected float sensitivity = 100.0f;
+    protected float speed = 0.0025f;
+    protected float sensitivity = 50.0f;
 
     public Camera(int width, int height, mat4 projectionMatrix, vec3 position) {
         this.width = width;
