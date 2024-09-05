@@ -2,12 +2,17 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ColorOps",
+            "request": "launch",
+            "mainClass": "util.ColorOps",
+            "projectName": "ColorGrading_bf101c39"
+        },
+        {
+            "type": "java",
             "name": "App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "Graphics_1b8aaefe",
-            "vmArgs": "-Dorg.lwjgl.librarypath=\"C://Users//cpmil//lwjgl\""
+            "projectName": "ColorGrading_bf101c39"
         }
     ]
-
 }
