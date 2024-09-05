@@ -2,17 +2,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "ColorOps",
-            "request": "launch",
-            "mainClass": "util.ColorOps",
-            "projectName": "ColorGrading_bf101c39"
-        },
-        {
-            "type": "java",
             "name": "App",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "ColorGrading_bf101c39"
+            "projectName": "Graphics_225d600b"
         }
     ]
 }
